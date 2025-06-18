@@ -1,0 +1,371 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing AT ALL.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Coldplay vs Metallica: A Battle Of The Classics "
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Some Guy}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Tagishi Mashego"  # First Author - note the thanks message displayed as an italic footnote of first page.
+#Ref1: "Some Institution, Cape Town, South Africa" # First Author's Affiliation
+Email1: "tagishi\\@gmail.com" # First Author's Email address
+
+#Author2: "John Smith"
+#Ref2: "Some other Institution, Cape Town, South Africa"
+#Email2: "John\\@gmail.com"
+#CommonAffiliation_12: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+
+#Author3: "John Doe"
+#Email3: "Joe\\@gmail.com"
+
+#CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+#keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+#JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+abstract: |
+  
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+# Note: Include = FALSE implies the code is executed, but not printed in your pdf.
+# warning and message = FALSE implies ugly messages and warnings are removed from your pdf.
+# These should be picked up when you execute the command chunks (code sections below) in your rmd, not printed in your paper!
+
+# Lets load in example data, and see how this can be stored and later called from your 'data' folder.
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+Example_data <- Texevier::Ex_Dat
+
+# Notice that as you are working in a .Rproj file (I am assuming you are) - the relative paths of your directories start at your specified root.
+# This means that when working in a .Rproj file, you never need to use getwd() - it is assumed as your base root automatically.
+write_rds(Example_data, path = "data/Example_data.rds")
+
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Answer 
+
+## Part 1 
+
+It’s time to finally settle the age-old debate: Coldplay vs. Metallica.
+
+
+```{r Figure12, warning =  FALSE, fig.align = 'center', fig.cap = "Battle of The Best \\label{Figure12}", fig.height = 3, fig.width = 6, dev = 'png'}
+
+coldplay  <- read_csv(here::here("data", "Coldplay_vs_Metallica", "Coldplay.csv")) %>%  rename(album = `album_name`)
+metallica <- read_csv(here::here("data", "Coldplay_vs_Metallica", "metallica.csv"))
+spotify <- read_rds(here::here("data", "Coldplay_vs_Metallica", "Broader_Spotify_Info.rds"))
+billboard_100 <- read_rds(here::here("data", "Coldplay_vs_Metallica", "charts.rds"))
+
+
+code_files <- list.files(here::here("code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+plot_album_comparison(data1 = coldplay , data2 = metallica)
+```
+As a basketball fan, I’ve often wondered who would win in their prime, LeBron or Jordan. You can only truly compare greatness when both are at their best. That’s the spirit behind Table \ref{Figure12}, which compares the most popular albums from each band.
+
+The boxplot reveals that Coldplay holds a slightly higher median track popularity than Metallica. Notably , Coldplay boasts more popular songs, with Yellow claiming the top overall spot. Further this shows that there is large variance in the popularity of Parachutes, some hits and some misses. However , 72 seasons just seems to be an above average album. 
+
+
+Upon examining the data , I noticed the wide range in the duration of Metallica songs , could this be partly why their songs tend to be less popular or could this reveal a strong positive relationship between the length of songs and their popularity. 
+
+
+
+<!-- The following is a code chunk. It must have its own unique name (after the r), or no name. After the comma follows commands for R which are self-explanatory. By default, the code and messages will not be printed in your pdf, just the output: -->
+
+
+
+
+
+
+
+
+```{r Figure54, warning =  FALSE, fig.align = 'center', fig.cap = "Relationship Between Duration and Popularity \\label{Figure54}", fig.height = 3, fig.width = 6, dev = 'png'}
+  # This is just a random plot to show you a plot. This is done if the getwd() does not point to your Template's directory.
+  # Set WD below to your project's working directory.
+code_files <- list.files(here::here("code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+duration(data1 = coldplay, data2= metallica)
+
+
+  
+
+
+```
+
+Figure \ref{Figure54} illustrates that there is a relatively flat trend between the duration of Metallica songs and their popularity , showing that listeners of this band are indifferent to the length of the song. However, the figure shows that most songs hover around the low to middle popularity scores irrespective of duration. In contrast, figure \ref{Figure54} shows that Coldplay's most popular songs tend to be mid-length, with popularity gradually declining as track duration increases.
+
+One might say : I want to enjoy the song for as long as possible. This statement ignores the fact that many times we listen to music to make us happy and to socialise, so a prolonged song might just ruin the mood. The next figure compares the danceability of Metallica and Coldplay songs. 
+
+```{r Figure60, warning =  FALSE, fig.align = 'center', fig.cap = " Danceability Comparison \\label{Figure60}", fig.height = 3, fig.width = 6, dev = 'png'}
+
+ code_files <- list.files(here::here("code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+
+dannce_plot(data=coldplay, data2 = metallica)
+
+```
+ 
+
+Figure \ref{Figure60}  shows that Metallica that most of Metallica's songs have a low danceability , further the narrow range indicates that this is a theme for most of their songs , not surprising given that they are a heavy-metal band. In contrast, Coldplay songs have a wide variety of danceability , this shows the ability of the artists to appeal to different preferences. With this distribution slightly shifted to the right we conclude that Coldplay songs have on average a higher danceability. 
+
+That got me thinking, can we take these findings and extrapolate them to the broader music industry?
+
+\newpage
+
+```{r Figure3, warning =  FALSE, fig.align = 'center', fig.cap = " Trend In Danceable Music  \\label{Figure3}", fig.height = 3, fig.width = 6, dev = 'png'}
+
+
+
+code_files <- list.files(here::here("code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+
+danu(data = spotify)
+```
+
+Figure \ref{Figure3} shows that over time, average danceability in music actually declined for a while. I'm a firm believer that artists follow what listeners want, so maybe Metallica and Coldplay aren’t the best examples to base this on. Interestingly, just before 2000, we see a shift : danceability starts to rise again, and that upward trend has continued, suggesting a clear change in listener preferences. 
+
+
+
+
+
+<!-- :::::: {.columns data-latex="[T]"} -->
+<!-- ::: {.column data-latex="{0.7\textwidth}"} -->
+<!-- ```{r, echo=FALSE, fig.width=4, fig.height=4} -->
+<!-- par(mar = c(4, 4, .2, .1)) -->
+<!-- plot(cars, pch = 19) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column data-latex="{0.05\textwidth}"} -->
+<!-- \ -->
+<!-- ::: -->
+<!-- ::: {.column data-latex="{0.2\textwidth}"} -->
+<!-- \scriptsize -->
+
+<!-- ## Data {-} -->
+<!-- The figure on the left-hand side shows the `cars` data. -->
+
+<!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do -->
+<!-- eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut -->
+<!-- enim ad minim veniam, quis nostrud exercitation ullamco laboris -->
+<!-- nisi ut aliquip ex ea commodo consequat. -->
+<!-- ::: -->
+<!-- :::::: -->
+
+
+
+
+
+
+
+<!-- $$ -->
+<!-- This is a commented out section in the writing part. -->
+<!-- Comments are created by highlighting text, amnd pressing CTL+C -->
+<!-- \\begin{align} -->
+<!-- \\beta = \\alpha^2 -->
+<!-- \end{align} -->
+<!-- $$ -->
+
+
+```{r eval=FALSE, fig.cap=figures("Some Figure"), include=FALSE, out.width="205px"}
+
+knitr::include_graphics("YourFigureLocation/Logo.png")
+
+```
+
+
+
+
+```{r ShortTable, eval=FALSE, include=FALSE, results='asis'}
+
+library(xtable)
+data <- mtcars[1:5,] %>% tibble::as_tibble()
+
+table <- xtable(data, caption = "Short Table Example \\label{tab1}")
+  print.xtable(table,
+             # tabular.environment = "longtable",
+             floating = TRUE,
+             table.placement = 'H',
+             # scalebox = 0.3,
+             comment = FALSE,
+             caption.placement = 'bottom'
+             )
+
+```
+
+
+
+```{r LongTable, eval=FALSE, include=FALSE, results='asis'}
+
+library(xtable)
+
+data = mtcars %>% tibble::as_tibble()
+  addtorow          <- list()
+  addtorow$pos      <- list()
+  addtorow$pos[[1]] <- c(0)
+  addtorow$command  <- c(paste("\\hline \n",
+                               "\\endhead \n",
+                               "\\hline \n",
+                               "{\\footnotesize Continued on next page} \n",
+                               "\\endfoot \n",
+                               "\\endlastfoot \n",sep=""))
+table <- xtable(data, caption = "Long Table Example")
+  print.xtable(table,
+             tabular.environment = "longtable",
+             floating = FALSE, # Leave this as is.
+             table.placement = 'H', # Leave this as is.
+             booktabs = T, # Aesthetics
+             include.rownames = FALSE,  # Typically you don't want this in a table.
+             add.to.row = addtorow, # For adding the Continued on next page part...
+             comment = FALSE,
+             caption.placement = 'top',  # Where do you want the caption?
+             size="\\fontsize{12pt}{13pt}\\selectfont"  # Size of text in table..
+             )
+# See https://cran.r-project.org/web/packages/xtable/vignettes/xtableGallery.pdf for table inspiration
+```
+
+\hfill
+
+<!-- hfill can be used to create a space, like here between text and table. -->
+
+
+
+
+
+```{r eval=FALSE, include=FALSE, results='asis'}
+
+if(!require(huxtable)) install.packages(huxtable)
+library(huxtable)
+data(diamonds, package = 'ggplot2')
+Title <- "Regression Output"
+Label <- "Reg01"
+lm1 <- lm(price ~ carat, diamonds)
+lm2 <- lm(price ~ depth, diamonds)
+lm3 <- lm(price ~ carat + depth, diamonds)
+htab <-
+huxreg(lm1, lm2, lm3,
+                statistics = c(N = "nobs", R2 = "r.squared"),
+                note = "%stars%.") %>%
+  set_caption(Title) %>%
+  set_label(Label)
+# More settings:
+font_size(htab) <- 12
+# Let's change regression names: this is slightly hacky, but works. Comment out this section to see what the default looks like:
+  Names <- c( "Reg1", "Reg2", "Reg3")
+  for(i in 1:length(Names)) {
+    htab[1,][[1+i]] <- Names[i]
+  }
+# Now simply call the table:
+htab
+
+```
+
+
+
+
+<!-- Make title of bibliography here: -->
+<!-- \newpage -->
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+
+# Appendix {-}
+
+## Appendix A {-}
+
+Some appendix information here
+
+## Appendix B {-}
+
+
+
+
+ @Texevier 
+
+

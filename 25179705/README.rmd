@@ -1,0 +1,201 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Purpose
+
+Purpose of this work folder.
+
+Ideally store a minimum working example data set in data folder.
+
+Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
+
+
+```{r}
+
+rm(list = ls()) # Clean your environment:
+gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
+library(pacman)
+p_load(tidyverse, lubridate)
+list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+```
+
+## Question 1 
+
+## Loading data
+
+
+```{r}
+
+gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
+library(pacman)
+p_load(tidyverse, lubridate)
+
+list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+
+
+Top_100_Billboard <- read_rds(here::here("Question1","data", "US_Baby_names", "charts.rds"))
+
+Baby_Names <- read_rds(here::here("Question1","data", "US_Baby_names", "Baby_Names_By_US_State.rds"))
+
+HBO_titles <-read_rds(here::here("Question1","data", "US_Baby_names","HBO_titles.rds"))
+
+HBO_credits <- read_rds(here::here("Question1","data", "US_Baby_names","HBO_credits.rds"))
+
+code_files <- list.files(here::here("Question1","code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+
+
+
+HBO_Bill_Names(data1= Baby_Names, data2 = Top_100_Billboard, data3 = HBO_credits)
+
+most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_credits)
+
+
+```
+
+
+
+## Question 2
+
+## Loading data
+
+
+```{r}
+
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+
+coldplay  <- read_csv(here::here("Question2","data", "Coldplay_vs_Metallica", "Coldplay.csv")) %>%  rename(album = `album_name`)
+metallica <- read_csv(here::here("Question2","data", "Coldplay_vs_Metallica", "metallica.csv"))
+spotify <- read_rds(here::here("Question2","data", "Coldplay_vs_Metallica", "Broader_Spotify_Info.rds"))
+billboard_100 <- read_rds(here::here("Question2","data", "Coldplay_vs_Metallica", "charts.rds"))
+
+
+code_files <- list.files(here::here("Question2","code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+
+
+```
+
+
+
+## Question 3
+
+```{r}
+
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question2/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question3/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+## This is the correct way to source 
+list.files("Question3/data/netflix")
+
+
+
+Titles <- read_rds('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/titles.rds')
+Credits <- read_rds('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/credits.rds')
+Movie_Info <- read_csv('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/netflix_movies.csv')
+
+
+yho <- Titles  %>% mutate(country_clean = gsub("\\[|\\]|\"", '', production_countries))
+
+
+IMDB_plot(data = Titles , Title = "Average IMDb Ratings Over Time (USA)")
+
+
+
+
+```
+
+
+
+## Question 4
+
+
+```{r}
+
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+library(dplyr)
+library(xtable)
+
+
+
+Billions <- read_csv(here::here("Question4","data", "Billions","billionaires.csv")) %>% arrange(desc(company.founded)) 
+
+code_files <- list.files(here::here("Question4", "code"), pattern = "\\.R$", full.names = TRUE)
+
+invisible(lapply(code_files, source))
+
+
+firstplot(data = Billions , Title = "Billionaires : Inherited Wealth ( USA vs Rest of World") 
+
+third_plot(data = Billions , Title = "Top 10 Sectors Producing the Most Self- Made Billionaires Since 2000")
+
+
+print(
+  xtable(us_inheritance_table(data = Billions) , caption = "USA Billionaires by Inheritance Status \\label{tab1}"),
+  include.rownames = FALSE,
+  caption.placement = "bottom" , comment = FALSE ,
+)
+
+
+print(
+  xtable(non_us_inheritance_table(data = Billions), caption = "Rest of the World by Inheritance Status\\label{tab2}"),
+  include.rownames = FALSE,
+  caption.placement = "bottom" , comment = FALSE 
+)
+
+print(
+  xtable(top5_companies_table(data = Billions) , caption = "Companies With Most Billionaires \\label{tab3}"),
+  include.rownames = FALSE,
+  caption.placement = "bottom" , comment = FALSE ,
+)
+
+
+
+
+
+
+
+```
+
+
+
+
+# Question 5 
+
+```{r}
+
+
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question2/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question3/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question4/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+list.files('Question5/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+
+
+
+Health <- read_csv('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question5/data/Health/HealthCare.csv')
+
+
+
+```
+

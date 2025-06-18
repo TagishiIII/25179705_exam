@@ -1,0 +1,383 @@
+\documentclass[11pt,preprint]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[numbers]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+\href{\#cite.\detokenize{#1}}{#2}\nocite{#1}}
+
+\makeatletter
+% allow citations to break across lines
+\let\@cite@ofmt\@firstofone
+% avoid brackets around text for \cite:
+\def\@biblabel#1{}
+\def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+{\begin{list}{}{%
+	\setlength{\itemindent}{0pt}
+	\setlength{\leftmargin}{0pt}
+	\setlength{\parsep}{0pt}
+	% turn on hanging indent if param 1 is 1
+	\ifodd #1
+	\setlength{\leftmargin}{\cslhangindent}
+	\setlength{\itemindent}{-1\cslhangindent}
+	\fi
+	% set entry spacing
+	\setlength{\itemsep}{#2\baselineskip}}}
+{\end{list}}
+
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{Coldplay vs Metallica: A Battle Of The Classics}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Tagishi Mashego}
+\ead{tagishi@gmail.com}
+
+
+
+
+
+
+
+
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+\setcounter{footnote}{0}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\section{Answer}\label{answer}
+
+\subsection{Part 1}\label{part-1}
+
+It's time to finally settle the age-old debate: Coldplay vs.~Metallica.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question2_files/figure-latex/Figure12-1} 
+
+}
+
+\caption{Battle of The Best \label{Figure12}}\label{fig:Figure12}
+\end{figure}
+
+As a basketball fan, I've often wondered who would win in their prime,
+LeBron or Jordan. You can only truly compare greatness when both are at
+their best. That's the spirit behind Table \ref{Figure12}, which
+compares the most popular albums from each band.
+
+The boxplot reveals that Coldplay holds a slightly higher median track
+popularity than Metallica. Notably , Coldplay boasts more popular songs,
+with Yellow claiming the top overall spot. Further this shows that there
+is large variance in the popularity of Parachutes, some hits and some
+misses. However , 72 seasons just seems to be an above average album.
+
+Upon examining the data , I noticed the wide range in the duration of
+Metallica songs , could this be partly why their songs tend to be less
+popular or could this reveal a strong positive relationship between the
+length of songs and their popularity.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question2_files/figure-latex/Figure54-1} 
+
+}
+
+\caption{Relationship Between Duration and Popularity \label{Figure54}}\label{fig:Figure54}
+\end{figure}
+
+Figure \ref{Figure54} illustrates that there is a relatively flat trend
+between the duration of Metallica songs and their popularity , showing
+that listeners of this band are indifferent to the length of the song.
+However, the figure shows that most songs hover around the low to middle
+popularity scores irrespective of duration. In contrast, figure
+\ref{Figure54} shows that Coldplay's most popular songs tend to be
+mid-length, with popularity gradually declining as track duration
+increases.
+
+One might say : I want to enjoy the song for as long as possible. This
+statement ignores the fact that many times we listen to music to make us
+happy and to socialise, so a prolonged song might just ruin the mood.
+The next figure compares the danceability of Metallica and Coldplay
+songs.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question2_files/figure-latex/Figure60-1} 
+
+}
+
+\caption{ Danceability Comparison \label{Figure60}}\label{fig:Figure60}
+\end{figure}
+
+Figure \ref{Figure60} shows that Metallica that most of Metallica's
+songs have a low danceability , further the narrow range indicates that
+this is a theme for most of their songs , not surprising given that they
+are a heavy-metal band. In contrast, Coldplay songs have a wide variety
+of danceability , this shows the ability of the artists to appeal to
+different preferences. With this distribution slightly shifted to the
+right we conclude that Coldplay songs have on average a higher
+danceability.
+
+That got me thinking, can we take these findings and extrapolate them to
+the broader music industry?
+
+\newpage
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Question2_files/figure-latex/Figure3-1} 
+
+}
+
+\caption{ Trend In Danceable Music  \label{Figure3}}\label{fig:Figure3}
+\end{figure}
+
+Figure \ref{Figure3} shows that over time, average danceability in music
+actually declined for a while. I'm a firm believer that artists follow
+what listeners want, so maybe Metallica and Coldplay aren't the best
+examples to base this on. Interestingly, just before 2000, we see a
+shift : danceability starts to rise again, and that upward trend has
+continued, suggesting a clear change in listener preferences.
+
+\hfill
+
+\newpage
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-Texevier}
+Katzke, N.F. 2017. \emph{{Texevier}: {P}ackage to create elsevier
+templates for rmarkdown}. Stellenbosch, South Africa: Bureau for
+Economic Research.
+
+\end{CSLReferences}
+
+\section*{Appendix}\label{appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+\subsection*{Appendix A}\label{appendix-a}
+\addcontentsline{toc}{subsection}{Appendix A}
+
+Some appendix information here
+
+\subsection*{Appendix B}\label{appendix-b}
+\addcontentsline{toc}{subsection}{Appendix B}
+
+Katzke (\citeproc{ref-Texevier}{2017})
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}
