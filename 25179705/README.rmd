@@ -33,7 +33,6 @@ p_load(tidyverse, lubridate)
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 
 
-
 Top_100_Billboard <- read_rds(here::here("Question1","data", "US_Baby_names", "charts.rds"))
 
 Baby_Names <- read_rds(here::here("Question1","data", "US_Baby_names", "Baby_Names_By_US_State.rds"))
@@ -107,7 +106,6 @@ Movie_Info <- read_csv('/Users/tagishimashego/Desktop/Economics Masters/25179705
 
 
 yho <- Titles  %>% mutate(country_clean = gsub("\\[|\\]|\"", '', production_countries))
-
 
 IMDB_plot(data = Titles , Title = "Average IMDb Ratings Over Time (USA)")
 
