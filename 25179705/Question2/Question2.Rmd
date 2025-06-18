@@ -121,13 +121,12 @@ write_rds(Example_data, path = "data/Example_data.rds")
 <!-- # Start Writing here: -->
 <!-- ############################## -->
 
-# Answer 
+# Introduction
+
+It’s time to finally settle the age-old debate: Coldplay vs. Metallica.
 
 ## Part 1 
 
-
-
-It’s time to finally settle the age-old debate: Coldplay vs. Metallica.
 
 
 ```{r Figure12, warning =  FALSE, fig.align = 'center', fig.cap = "Battle of The Best \\label{Figure12}", fig.height = 3, fig.width = 6, dev = 'png'}
