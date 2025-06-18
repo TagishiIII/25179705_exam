@@ -185,13 +185,17 @@ Table \ref{tab1} supports the findings from the Spearman correlation analysis. A
 
 ## Part 2
 
+While the findings in Part 1 are informative, this section  highlights which character inspired names are most popular in the United States which will provide further insight. 
 
-```{r Figure2, warning =  FALSE, fig.align = 'center', fig.cap = "Name Trends \\label{Figure2}", fig.height = 3, fig.width = 6, dev = 'png'}
 
-trend(data1 = Baby_Names , data2 = Top_100_Billboard , data3 = HBO_credits)
+```{r Figure2, warning =  FALSE, fig.align = 'center', fig.cap = "Popular Character Names \\label{Figure2}", fig.height = 3, fig.width = 6, dev = 'png'}
+
+most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_credits)
 
 ```
 
+
+The most popular character inspired name in the US over the duration of the data is James , followed by John. What stands out to me immediately is that these two names are also Bible names , given the deep religious roots in America , perhaps we are overestimating the effect of the characters in the naming trends in the US. In fact, most of the names in the plot are bible names thus perhaps the agency ought to draw their attention to that data. However, naming conventions have evolved over time, with a noticeable shift toward more creative and unconventional names. This prompts a closer examination of how the most popular names have changed across different periods.
 
 
 
@@ -232,13 +236,14 @@ trend(data1 = Baby_Names , data2 = Top_100_Billboard , data3 = HBO_credits)
 
 
 
-```{r Figure3, warning =  FALSE, fig.align = 'center', fig.cap = "Popular Character Names \\label{Figure3}", fig.height = 3, fig.width = 6, dev = 'png' }
+```{r Figure3, warning =  FALSE, fig.align = 'center', fig.cap = "Name Trends \\label{Figure3}", fig.height = 3, fig.width = 6, dev = 'png' } 
 
+trend(data1 = Baby_Names , data2 = Top_100_Billboard , data3 = HBO_credits)
 
-
-most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_credits)
 
 ```
+
+Figure \ref{Figure3} shows a gradual decline in the number of babies being named after these historically popular names. This trend coincides with a broader cultural shift in which uniqueness is increasingly valued, as reflected in modern naming conventions. Nevertheless, given the strong biblical roots in the United States, the agency should still consider drawing inspiration from traditional biblical names when naming their toy.
 
 
 
