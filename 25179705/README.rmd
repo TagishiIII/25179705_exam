@@ -6,9 +6,11 @@ output:
 
 # Purpose
 
-This is my Data Science 871 project , this README shows the method I used
+This is my Data Science 871 project , this README shows the method I used in each question. 
+Enjoy!
 
 
+# Clean the environment 
 
 ```{r}
 
@@ -16,11 +18,11 @@ rm(list = ls()) # Clean your environment:
 gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(pacman)
 p_load(tidyverse, lubridate)
-list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
 ```
 
 ## Question 1 
 
+## Looking at the Persistence of Baby Names in the US 
 
 ```{r}
 
@@ -31,29 +33,34 @@ library(tidytext)
 
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 
-
+# Here I imported the data in a way that allows a user with the same path way to do the same 
 Top_100_Billboard <- read_rds(here::here("Question1","data", "US_Baby_names", "charts.rds"))
-
 Baby_Names <- read_rds(here::here("Question1","data", "US_Baby_names", "Baby_Names_By_US_State.rds"))
-
 HBO_titles <-read_rds(here::here("Question1","data", "US_Baby_names","HBO_titles.rds"))
-
 HBO_credits <- read_rds(here::here("Question1","data", "US_Baby_names","HBO_credits.rds"))
 
+
+# I sourced the code in a way that allows a user with the same path to do the same 
 code_files <- list.files(here::here("Question1","code"), pattern = "\\.R$", full.names = TRUE)
 invisible(lapply(code_files, source))
 
 
+# Join HBO data and Song Name to Baby Names data according to matching Names , the Song names portion was dropped 
 HBO_Bill_Names(data1= Baby_Names, data2 = Top_100_Billboard, data3 = HBO_credits)
 
+
+# A bar graph showing the most popular names 
 most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_credits)
 
+# A line graph showing the trend in popular. names
 trend(data1 = Baby_Names , data2 = Top_100_Billboard , data3 = HBO_credits)
 
+
+# A Spear Correlation showing the persistence of names 
 spear1(data = Baby_Names)
 
 
-
+# A table showing the persistence in the year 1974
  print(
       xtable(
     get_spearman_for_year(data = Baby_Names, y = 1974, g = "F") %>%
@@ -79,6 +86,7 @@ spear1(data = Baby_Names)
 
 ## Question 2
 
+## ColdPlay vs Metallica 
 
 ```{r}
 
@@ -86,19 +94,29 @@ spear1(data = Baby_Names)
 if(!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
 
-
+# Here I imported the data in a way that allows a user with the same path way to do the same 
 coldplay  <- read_csv(here::here("Question2","data", "Coldplay_vs_Metallica", "Coldplay.csv")) %>%  rename(album = `album_name`)
 metallica <- read_csv(here::here("Question2","data", "Coldplay_vs_Metallica", "metallica.csv"))
 spotify <- read_rds(here::here("Question2","data", "Coldplay_vs_Metallica", "Broader_Spotify_Info.rds"))
 billboard_100 <- read_rds(here::here("Question2","data", "Coldplay_vs_Metallica", "charts.rds"))
 
-
+# I sourced the code in a way that allows a user with the same path to do the same 
 code_files <- list.files(here::here("Question2","code"), pattern = "\\.R$", full.names = TRUE)
 invisible(lapply(code_files, source))
 
+
+# A box plot comparing Parachutes and 72 Seasons by track popularity 
 plot_album_comparison(data1 = coldplay , data2 = metallica)
+
+
+# A scatter plot showing how song length affects the popularity of songs 
 duration(data1 = coldplay, data2= metallica)
+
+# A density plot comparing the distribution of danceability songs by each band 
 dannce_plot(data=coldplay, data2 = metallica)
+
+
+# A scatter plot showing the trend in average danceability of songs overtime 
 danu(data = spotify)
 
 ```
@@ -107,6 +125,8 @@ danu(data = spotify)
 
 ## Question 3
 
+# Advising Netflix 
+
 ```{r}
 
 
@@ -114,22 +134,30 @@ if(!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
 library(forcats)
 
-
+# Here I imported the data in a way that allows a user with the same path way to do the same
 Titles <- read_rds(here::here("Question3","data", "netflix", "titles.rds"))
 Credit <- read_rds(here::here("Question3","data", "netflix", "credits.rds"))
 Movie_Info <- read_csv(here::here("Question3","data", "netflix", "netflix_movies.csv"))
 
+# I sourced the code in a way that allows a user with the same path to do the same 
 code_files <- list.files(here::here("Question3","code"), pattern = "\\.R$", full.names = TRUE)
 invisible(lapply(code_files, source))
 
-uno(data= Titles , top_n_genres =5, top_n_countries =5) 
+# A barplot showing the top rated genres by production country 
+uno(data= Titles , top_n_genres =5, top_n_countries =5)
+
+# A line graph showing the trend of the popularity of movies by release years
 trend(data = Titles)
+
+# A bar graph showing the directors who directed the most shows or movies 
+top_director(data1 = Titles , data2 = Movie_Info)
+
+
+# A density plot showing the IMDb distribution by the top 5 most prolific directors 
+top_producer_facet(data1= Titles , data2 = Movie_Info)
 
 
 ```
-
-
-#The chart a displays the highest-rated genre (by IMDb score) for five different production countries, focusing only on the top 5 most common genres across the data . The genre ['comedy', 'drama'] appears most frequently among the top-rated genres, suggesting that this hybrid genre resonates widely across different countries. Countries like India stand out by favoring documentaries, which may point to a niche strength or a particular audience taste.The consistently high IMDb scores across these genres indicate that when countries specialize or focus on these genres, the quality tends to be well-received by audiences.
 
 
 
@@ -145,33 +173,36 @@ library(tidyverse)
 library(dplyr)
 library(xtable)
 
-
-
+# Here I imported the data in a way that allows a user with the same path way to do the same
 Billions <- read_csv(here::here("Question4","data", "Billions","billionaires.csv")) %>% arrange(desc(company.founded)) 
 
+# I sourced the code in a way that allows a user with the same path to do the same
 code_files <- list.files(here::here("Question4", "code"), pattern = "\\.R$", full.names = TRUE)
-
 invisible(lapply(code_files, source))
 
-
+# A barplot showing the number of Billionaires in USA and Rest of the World by their inheritance status 
 firstplot(data = Billions , Title = "Billionaires : Inherited Wealth ( USA vs Rest of World") 
 
+# A barplot showing the top sectors producing billionaires post the dot.com period 
 third_plot(data = Billions , Title = "Top 10 Sectors Producing the Most Self- Made Billionaires Since 2000")
 
 
+# A table showing the percentages of USA billionaires by their inheritance status 
 print(
   xtable(us_inheritance_table(data = Billions) , caption = "USA Billionaires by Inheritance Status \\label{tab1}"),
   include.rownames = FALSE,
   caption.placement = "bottom" , comment = FALSE ,
 )
 
-
+# A table showing the percentages of Rest of World  billionaires by their inheritance status
 print(
   xtable(non_us_inheritance_table(data = Billions), caption = "Rest of the World by Inheritance Status\\label{tab2}"),
   include.rownames = FALSE,
   caption.placement = "bottom" , comment = FALSE 
 )
 
+
+# A table showing which companies have the most billionaires associated with them 
 print(
   xtable(top5_companies_table(data = Billions) , caption = "Companies With Most Billionaires \\label{tab3}"),
   include.rownames = FALSE,
