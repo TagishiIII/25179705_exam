@@ -21,14 +21,13 @@ list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.
 
 ## Question 1 
 
-## Loading data
-
 
 ```{r}
 
 gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(pacman)
 p_load(tidyverse, lubridate)
+library(tidytext)
 
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 
@@ -45,11 +44,33 @@ code_files <- list.files(here::here("Question1","code"), pattern = "\\.R$", full
 invisible(lapply(code_files, source))
 
 
-
-
 HBO_Bill_Names(data1= Baby_Names, data2 = Top_100_Billboard, data3 = HBO_credits)
 
 most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_credits)
+
+trend(data1 = Baby_Names , data2 = Top_100_Billboard , data3 = HBO_credits)
+
+spear1(data = Baby_Names)
+
+
+
+ print(
+      xtable(
+    get_spearman_for_year(data = Baby_Names, y = 1974, g = "F") %>%
+      dplyr::mutate(
+        Year = as.integer(Year),
+        Future_Year = as.integer(Future_Year)
+      ),
+    caption = "Persistence of Female Names \\label{tab1}"
+  ),
+  include.rownames = FALSE,
+  caption.placement = "bottom",
+  comment = FALSE
+)
+ 
+ 
+
+
 
 
 ```
@@ -57,8 +78,6 @@ most_common_hbo_names(data1=Baby_Names, data2 = Top_100_Billboard , data3= HBO_c
 
 
 ## Question 2
-
-## Loading data
 
 
 ```{r}
@@ -77,7 +96,10 @@ billboard_100 <- read_rds(here::here("Question2","data", "Coldplay_vs_Metallica"
 code_files <- list.files(here::here("Question2","code"), pattern = "\\.R$", full.names = TRUE)
 invisible(lapply(code_files, source))
 
-
+plot_album_comparison(data1 = coldplay , data2 = metallica)
+duration(data1 = coldplay, data2= metallica)
+dannce_plot(data=coldplay, data2 = metallica)
+danu(data = spotify)
 
 ```
 
@@ -90,29 +112,25 @@ invisible(lapply(code_files, source))
 
 if(!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
-
-list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question2/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question3/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-
-## This is the correct way to source 
-list.files("Question3/data/netflix")
+library(forcats)
 
 
+Titles <- read_rds(here::here("Question3","data", "netflix", "titles.rds"))
+Credit <- read_rds(here::here("Question3","data", "netflix", "credits.rds"))
+Movie_Info <- read_csv(here::here("Question3","data", "netflix", "netflix_movies.csv"))
 
-Titles <- read_rds('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/titles.rds')
-Credits <- read_rds('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/credits.rds')
-Movie_Info <- read_csv('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question3/data/netflix/netflix_movies.csv')
+code_files <- list.files(here::here("Question3","code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
 
-
-yho <- Titles  %>% mutate(country_clean = gsub("\\[|\\]|\"", '', production_countries))
-
-IMDB_plot(data = Titles , Title = "Average IMDb Ratings Over Time (USA)")
-
-
+uno(data= Titles , top_n_genres =5, top_n_countries =5) 
+trend(data = Titles)
 
 
 ```
+
+
+#The chart a displays the highest-rated genre (by IMDb score) for five different production countries, focusing only on the top 5 most common genres across the data . The genre ['comedy', 'drama'] appears most frequently among the top-rated genres, suggesting that this hybrid genre resonates widely across different countries. Countries like India stand out by favoring documentaries, which may point to a niche strength or a particular audience taste.The consistently high IMDb scores across these genres indicate that when countries specialize or focus on these genres, the quality tends to be well-received by audiences.
+
 
 
 
