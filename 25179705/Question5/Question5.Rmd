@@ -1,5 +1,5 @@
 ---
-title: "Question5"
+title: "Health Dynamics"
 author: "Tagishi Mashego"
 date: "2025-06-18"
 output: powerpoint_presentation
@@ -7,29 +7,76 @@ output: powerpoint_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+library(dplyr)
+
+Health <- read_csv(here::here("data", "Health","HealthCare.csv")) 
+
+code_files <- list.files(here::here("code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+
 ```
 
-## R Markdown
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+# Introduction 
 
-## Slide with Bullets
+Ever heard the saying, "If you exercise more, you can eat whatever you want"? Yeah, now I'm over 200 pounds. 
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+# Impact of Physical Activity 
 
-## Slide with R Output
+- Physical Activity alone does not cause weight loss 
+- Indifference in weight change by activity level
 
-```{r cars, echo = TRUE}
-summary(cars)
+```{r cars, echo=FALSE}
+
+box_plot(data = Health)
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+# Regression Results 
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+
+ 
+library(knitr)
+library(broom)
+ model_object <- first_model(data = Health)
+ 
+ tidy(model_object) %>%
+   kable(
+   digits = 3,
+    caption = "Effect on Weight Change (lbs)"
+   )
 ```
+
+# Interpretation 
+ 
+ 
+- Age is not a meaningful predictor of weight change , contrary to belief 
+- Only sleep quality and stress levels are statistically significant predictors of weight change
+- This model has a R-Squared Value of 0.55 , thus there are a lot of pivotal variables missing 
+
+
+
+
+\newpage
+
+# Sleep anyone ? 
+
+```{r}
+
+sleep_chart(data = Health)
+
+
+
+```
+
+
+# Conclusion 
+
+Sure, the evidence on weight loss might be mixed , but I’m a big believer in the power of sleep. Sleep deprivation has been scientifically shown to impair neural pathways in the brain. So even if you’re not sleeping for your waistline, at least do it for your mind. 
 

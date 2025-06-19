@@ -30,6 +30,8 @@ gc() # garbage collection - It can be useful to call gc after a large object has
 library(pacman)
 p_load(tidyverse, lubridate)
 library(tidytext)
+library(dplyr)
+library(xtable)
 
 list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
 
@@ -220,7 +222,9 @@ print(
 ```
 
 
-# Question 5 
+## Question 5 
+
+## Health Dynamics 
 
 ```{r}
 
@@ -228,18 +232,30 @@ print(
 
 if(!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
-
-list.files('Question1/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question2/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question3/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question4/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
-list.files('Question5/code/', full.names = T, recursive = T) %>% as.list() %>% walk(~source(.))
+library(dplyr)
 
 
 
-Health <- read_csv('/Users/tagishimashego/Desktop/Economics Masters/25179705/Question5/data/Health/HealthCare.csv')
+# Here I imported the data in a way that allows a user with the same path way to do the same
+Health <- read_csv(here::here("Question5","data", "Health","HealthCare.csv")) 
 
+# I sourced the code in a way that allows a user with the same path to do the same
+code_files <- list.files(here::here("Question5", "code"), pattern = "\\.R$", full.names = TRUE)
+invisible(lapply(code_files, source))
+
+# Here I created a box plot to see the relationship between physical activity and weight change 
+box_plot(data = Health)
+
+# A regression model with Weigh change as the dependent variable 
+first_model(data = Health)
+
+
+# A pie chart showing the distribution of sleep 
+sleep_chart(data = Health)
 
 
 ```
+
+
+
 
